@@ -39,8 +39,8 @@
                 <a href="" class="inst-rgt-bg">Contact support</a>
               </div>
               <div class="col-md-12 dis-set">
-                @if(isset($store))
-               <p>Connected to:<span> {{$store->user_fullname}}</span> <a href="dashboard">Disconnect</a></p>
+                @if(isset($fullname))
+               <p>Connected to:<span> {{$fullname}}</span> <a href="dashboard">Disconnect</a></p>
                @endif 
             </div>
             </div>

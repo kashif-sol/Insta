@@ -43,14 +43,16 @@ class newsFeed extends Controller
         // }
         $store->user_fullname = $fullname;
         $store->save();
-        $feed = $feeds['images'];
-        //   $data = $feeds['images'];
-        foreach ($feed as $das) {
-            foreach ($das as $da) {
+        // $feed = $feeds['images'];
+        // //   $data = $feeds['images'];
+        // foreach ($feed as $das) {
+        //     foreach ($das as $da) {
               
-                dump($da);
-            }
-        }
+        //         dump($da);
+        //     }
+        // }
+        // return view('dashboard',compact('fullname'));
+        return redirect()->back()->with('fullname',$fullname);
     }
     public function Test(Request $request)
     {

@@ -5,6 +5,7 @@
         <div class="col-md-5 insta-layout">
           <div class="col-md-12">
             <img src="{{asset('image/instafeed-instagram-icon.png')}}" alt="" />
+           
             <h4>Instagram Feed</h4>
             @if(isset($post))
         <form class="flex flex-col w-full" method="POST" action="{{ route('store.update',$post->id) }}">
@@ -71,16 +72,24 @@
           </div>
         </div>
         <div class="col-md-7 insta-lay-rgt">
-          <h4>Preview</h4>
+          @if(isset($feeds))
+          <h4>Preview</h4> 
+         @foreach($pictures as $ar)
+  <img src="{{asset('assets/'.$ar)}}" alt="" style="width: 20px">
+          
+          @endforeach
+        
           <div class="col-md-12 img-combo">
-              <img src="{{asset('image/1.jpg')}}" alt="">
-              <img src="{{asset('image/2.jpg')}}" alt="">
-              <img src="{{asset('image/1.jpg')}}" alt="">
-              <img src="{{asset('image/2.jpg')}}" alt="">
+            <div class="data">
+             
+            
           </div>
+          
+          @else
           <div class="col-md-12 img-pwr">
               <img src="{{asset('image/powered-by-instafeed.png')}}" alt="">
             </div>
+            @endif
         </div>
       </div>
     </div>
