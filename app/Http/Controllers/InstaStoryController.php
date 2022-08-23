@@ -3,7 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\InstaStory;
+use App\Models\InstaFeed;
+use App\Models\Instagram;
+use Session;
+use Instagram\Api;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Illuminate\Http\Request;
+use Instagram\Exception\InstagramException;
+use Instagram\Model\Media;
+use Instagram\Utils\MediaDownloadHelper;
+
 
 class InstaStoryController extends Controller
 {
@@ -15,12 +24,58 @@ class InstaStoryController extends Controller
         $post->story = $request->story;
         $post->user_id = $request->user_id;
         $post->save();
-      
-        return view('insta-stories',compact('post'));
+        $cachePool = new FilesystemAdapter('Instagram', 0, __DIR__ . '/../cache');
+        try {
+
+
+            $helper = new HelperController;
+            $api = new Api($cachePool);
+            $api->login('festedurto', 'newsfeed');
+            // $profiles = $request->profile;
+            $profile = $api->getProfile('imrankhan.pti');
+            // $profile = $api->getProfile('kmushtaq7');
+            $fullname = $profile->getFullName();
+            // $stories = $helper->stories($profile,$api);
+            // $reels = $helper->reels($profile,$api);
+            // $feeds =$helper->media($profile,$api);
+            // $medias = $profile->getMedias(); 
+
+            $feedStories = $api->getStories($profile->getId());
+            $pictures = [];
+            $stories = $feedStories->getStories();
+            foreach ($stories as $stories) {
+
+                // $fileName = MediaDownloadHelper::downloadMedia($media->getDisplaySrc());
+                $pic = $stories->getDisplayUrl();
+
+                $url = $pic;
+                $downloadDir = public_path() . "/assets";
+
+                $fileName = MediaDownloadHelper::downloadMedia($url, $downloadDir);
+                array_push($pictures, $fileName);
+            }
+            if($post->story=='all'){
+
+
+
+                $story = $pictures;
+                }
+                else if($post->story==2){
+                    $story = array_slice($pictures, 0, 2);
+                 
+                }
+                else{
+                    $story = array_slice($pictures, 0, 1);
+                }
+        } catch (InstagramException $e) {
+            dd($e->getMessage());
+        }
+
+        return view('insta-stories', compact('post', 'story'));
     }
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
-        $post= InstaStory::updateOrCreate(
+        $post = InstaStory::updateOrCreate(
             [
                 'id' => $id
             ],
@@ -30,6 +85,6 @@ class InstaStoryController extends Controller
                 'story' => $request->story,
             ],
         );
-       return view('insta-stories',compact('post'));
+        return view('insta-stories', compact('post'));
     }
 }

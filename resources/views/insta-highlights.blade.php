@@ -1,4 +1,14 @@
 @include('layouts.header')
+<style>
+  .insta-lay-rgt .img-combo img {
+    width: 150px;
+    height: 160px;
+    margin-right: -5px;
+    border-radius: 50%;
+    border: 1px solid gold;
+    padding: 5px;
+}
+</style>
 <section>
     <div class="container-fluid">
       <div class="row">
@@ -48,13 +58,13 @@
         </div>
         <div class="col-md-7 insta-lay-rgt">
           <h4>Preview</h4>
-          <div class="col-md-12 img-sty-1">
-              <img src="{{asset('image/instafeed-story.png')}}" alt="">
-              <img src="{{asset('image/instafeed-story.png')}}" alt="">
-              <img src="{{asset('image/instafeed-story.png')}}" alt="">
-              <img src="{{asset('image/instafeed-story.png')}}" alt="">
-              <img src="{{asset('image/instafeed-story.png')}}" alt="">
+          @if(isset($post))
+          <div class="col-md-12 img-combo">
+            @foreach($highlight as $ar)
+              <img src="{{asset('highlights/'.$ar)}}" alt="">
+              @endforeach
           </div>
+          @endif
         </div>
       </div>
     </div>

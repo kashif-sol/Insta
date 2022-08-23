@@ -36,7 +36,10 @@
               <div class="col-md-6">
                 <label for="">Post Spacing</label><br />
                 <select name="spacing" id="">
-                  <option value="no spacing">No spacing</option>
+                  <option value="0">No spacing</option>
+                  <option value="5">5px</option>
+                  <option value="10">10px</option>
+                  <option value="15">15px</option>
                 </select>
               </div>
               <div class="col-md-6">
@@ -48,12 +51,15 @@
               <div class="col-md-6">
                 <label for="">Border Radius</label><br />
                 <select name="border" id="">
-                  <option value="10px">10px</option>
+                  <option value="10">10px</option>
+                  <option value="5">5px</option>
+                  <option value="7">7px</option>
                 </select>
               </div>
               <div class="col-md-6">
                 <label for="">Columns</label><br />
                 <select name="column" id="">
+                  <option value="2">2</option>
                   <option value="4">4</option>
                 </select>
               </div>
@@ -71,26 +77,7 @@
             </form>
           </div>
         </div>
-        <div class="col-md-7 insta-lay-rgt">
-          @if(isset($feeds))
-          <h4>Preview</h4> 
-         @foreach($pictures as $ar)
-  <img src="{{asset('assets/'.$ar)}}" alt="" style="width: 20px">
-          
-          @endforeach
-        
-          <div class="col-md-12 img-combo">
-            <div class="data">
-             
-            
-          </div>
-          
-          @else
-          <div class="col-md-12 img-pwr">
-              <img src="{{asset('image/powered-by-instafeed.png')}}" alt="">
-            </div>
-            @endif
-        </div>
+        @include('layouts.feed-layout')
       </div>
     </div>
   </section>

@@ -1,4 +1,14 @@
 @include('layouts.header')
+<style>
+  .insta-lay-rgt .img-combo img {
+    width: 150px;
+    height: 160px;
+    margin-right: -5px;
+    border-radius: 50%;
+    border: 1px solid gold;
+    padding: 5px;
+}
+</style>
 <section>
     <div class="container-fluid">
       <div class="row">
@@ -37,7 +47,9 @@
               <div class="col-md-6">
                   <label for="">Stroy Selection</label><br />
                   <select name="story" id="">
-                    <option value="Select Story">All</option>
+                    <option value="all">All</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
                   </select>
                 </div>
               <div class="col-md-12">
@@ -49,9 +61,15 @@
         </div>
         <div class="col-md-7 insta-lay-rgt">
           <h4>Preview</h4>
-          <div class="col-md-12 img-sty">
-              <img src="{{asset('image/instafeed-story.png')}}" alt="">
+          @if(isset($post))
+          
+          <div class="col-md-12 img-combo">
+            @foreach($story as $ar)
+              <img src="{{asset('assets/'.$ar)}}" alt="">
+              @endforeach
           </div>
+          
+          @endif
         </div>
       </div>
     </div>
