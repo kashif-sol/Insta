@@ -36,6 +36,7 @@ class InstaHighlightController extends Controller
             foreach ($storyHighlights->getFolders() as $folder) {
                 $folder = $api->getStoriesOfHighlightsFolder($folder);
                 $url=$folder->getStories();
+            
                 foreach ($url as $value) {
                  $pic= $value->getDisplayUrl();
                  $url = $pic;

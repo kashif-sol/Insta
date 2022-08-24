@@ -46,13 +46,21 @@
             </form>
           </div> 
         </div>
-        <div class="col-md-7 insta-lay-rgt">
+        <div class="col-md-7 insta-lay-rgt"> 
           <h4>Preview</h4>
+          @if(!isset($post))
           <div class="col-md-12 img-sty">
               <video src="{{asset('video/Kenady Fundings - Tony Carson Another Fix and Flip mortgage project. in progress project. Ludlow KY.mp4')}}" controls></video>
               <video src="{{asset('video/Tony Carson Finding real estate to fix and flip.mp4')}}" controls></video>
               <video src="{{asset('video/Tony Carson in Naples Florida talks about buying an investment home.mp4')}}" controls></video>
           </div>
+          @else 
+          <div class="col-md-12 img-sty">
+            @foreach($reel_data as $ar)
+            <video src="{{asset('reels/'.$ar)}}" controls></video>
+            @endforeach
+          </div>
+            @endif
         </div>
       </div>
     </div>

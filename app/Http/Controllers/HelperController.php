@@ -26,7 +26,7 @@ class HelperController extends Controller
                 sleep(1);
             } while ($reelsFeed->hasMaxId());
 
-        return $all_reels;
+        return $all_reels; 
     }
     function printReels(ReelsFeed $reelsFeed)
     {
