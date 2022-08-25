@@ -18,7 +18,7 @@ class Story extends Model
         'angle',
        
     ];
-
+public $table='stories';
     public function images()
     {
         return $this->hasMany(StoriesImages::class, 'story_id');

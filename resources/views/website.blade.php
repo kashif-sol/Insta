@@ -5,8 +5,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    @if(request()->is('custom-highlights'))
+    <!-- Homepage -->
     <link rel="stylesheet" href="{{asset('css/bootstraps.min.css')}}" />
     <link rel="stylesheet" href="{{asset('css/customs.css?v=3')}}" />
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+@else
+    <!-- All Other Pages -->
+    <link rel="stylesheet" href="{{asset('css/bootstraps.min.css')}}" />
+    <link rel="stylesheet" href="{{asset('css/customs.css?v=3')}}" />
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+@endif
+    <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}" />
+    <link rel="stylesheet" href="{{asset('css/custom.css?v=3')}}" />
     <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
   </head>
   <body>
@@ -49,7 +60,24 @@
           }
 
         });
-
+        // $("#color_type , #first_color ,#second_color ,  #angle").change(function(){
+        //   $(".color_type1,.color_grad").addClass("hideFirstColor");
+        //   var color = $("#color_type").val();
+        //   var bg = $("#first_color").val();
+        //   if(color == "G")
+        //   {
+        //       var f =  $("#first_color").val();
+        //       var s =  $("#second_color").val();
+        //       var a =  $("#angle").val();
+        //       bg = 'linear-gradient('+a+', '+f+', '+s+') ';
+        //     $(".color_type1,.color_grad").removeClass("hideFirstColor");
+        //   }else if(color == "S"){
+        //     $(".color_type1").removeClass("hideFirstColor");
+        //   }else{
+        //     $(".color_type1,.color_grad").addClass("hideFirstColor");
+        //   }
+        //     $("dash-img").attr( "style",  "background:" + bg + "!important");
+        // });
        
 
        $(document).on("change" , ".story-file" , function(){

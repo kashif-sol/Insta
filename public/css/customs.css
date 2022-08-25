@@ -1,8 +1,8 @@
-
-.dash{
-    padding: 50px 0px;
-
+.dash {
+    padding: 50px;
 }
+
+
 .dash form .head input {
     width: 30%;
     border: 2px solid rgb(192, 190, 190);
@@ -16,27 +16,7 @@
     padding: 0px 0px 0px 10px;
     font-size: 15px;
 }
-select#color_type {
-    width: 100%;
-    border: 2px solid #d1d1d1;
-    border-radius: 10px;
-    height: 35px;
-    padding: 0px 0px 0px 15px;
-    margin-bottom: 20px;
-}
-select#angle {
-    width: 100%;
-    border: 2px solid #d1d1d1;
-    border-radius: 10px;
-    height: 35px;
-    padding: 0px 0px 0px 15px;
-    margin-bottom: 20px;
 
-}
-#first_color,#second_color{
-    height: 35px;
-    border-radius: 10px;
-}
 .dash form p {
     font-weight: 500;
     font-size: 17px;
@@ -67,11 +47,11 @@ select#angle {
     align-items: center;
 }
 
-input#img-up-44 {
+.dash form .upload-img input[type="file"] {
     display: none;
 }
 
- form .upload-img label {
+.dash form .upload-img label {
     width: 100%;
     text-align: center;
     height: 35px;
@@ -79,7 +59,7 @@ input#img-up-44 {
     background: #048161;
     display: table;
     color: #fff;
-    font-size: 14px;
+    font-size: 18px;
     padding: 4px 0px 0px 0px;
     cursor: pointer;
 }
@@ -149,7 +129,7 @@ input#img-up-44 {
     background-color: #fff;
     color: #000;
     border: 2px solid rgb(192, 190, 190);
-    width: 30%;
+    width: 10%;
     height: 35px;
     border-radius: 10px;
 }
@@ -348,7 +328,6 @@ input[type="text"] {
     margin-top: 30px;
     gap: 20px;
 }
-
 
 #delete-story {
     background: #fff;

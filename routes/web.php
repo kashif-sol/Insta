@@ -53,5 +53,7 @@ Route::post('insta-highlight/{id}',[InstaHighlightController::class,'update'])->
 Route::post('insta-reel',[InstaReelController::class,'index']);
 Route::post('insta-reel/{id}',[InstaReelController::class,'update'])->name('reel.update');
 Route::post('custom',[CustomHighlightController::class,'index']);
+Route::post('chighlight-update/{id}',[CustomHighlightController::class,'update'])->name('customhighlight.update');
 Route::post('custom/{id}',[CustomHighlightController::class,'update'])->name('custom.update');
 Route::post('/save-story',[CustomHighlightController::class,"create"])->name("save-story");
+Route::get('custom-highlights-show',[CustomHighlightController::class,'view_stories']);

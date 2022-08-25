@@ -62,7 +62,7 @@
                   </div>
               <h6>Instagram Hightlights</h6>
               </div></a>
-              <a href="/custom-highlights"><div class="col">
+              <a href="/custom-highlights-show"><div class="col">
                       <div class="dash-img">
                           <img src="{{asset('image/instafeed-custom-highlights.png')}}" alt="">
                       </div>

@@ -404,7 +404,8 @@
 }
 .insta-layout .in-hg img{
   width: 100%;
-  max-width: 160px;
+  max-width: 70px;
+  border-radius: 50%;
 }
 .cus-hg .upload-img input[type="file"] {
   display: none;
@@ -487,4 +488,354 @@
   .inst-sty form .inst-use::placeholder{
     font-size: 12px;
   }
+}
+.dash {
+  padding: 50px;
+}
+
+
+.dash form .head input {
+  width: 30%;
+  border: 2px solid rgb(192, 190, 190);
+  border-radius: 10px;
+  margin-bottom: 20px;
+  height: 35px;
+  padding: 0px 0px 0px 10px;
+}
+
+.dash form .head span {
+  padding: 0px 0px 0px 10px;
+  font-size: 15px;
+}
+
+.dash form p {
+  font-weight: 500;
+  font-size: 17px;
+  margin-bottom: 10px;
+}
+
+.dash form .dash-page {
+  padding: 0px 0px 30px 0px;
+}
+
+.dash form select {
+  width: 100%;
+  border: 2px solid rgb(192, 190, 190);
+  border-radius: 10px;
+  margin-bottom: 20px;
+  height: 35px;
+}
+
+.dash form input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgb(192, 190, 190);
+  margin-right: 10px;
+}
+
+.dash form .dash-page label {
+  display: flex;
+  align-items: center;
+}
+
+.dash form .upload-img input[type="file"] {
+  display: none;
+}
+
+.dash form .upload-img label {
+  width: 100%;
+  text-align: center;
+  height: 35px;
+  border-radius: 5px;
+  background: #048161;
+  display: table;
+  color: #fff;
+  font-size: 18px;
+  padding: 4px 0px 0px 0px;
+  cursor: pointer;
+}
+
+.dash form input[type="search"] {
+  border: 2px solid rgb(192, 190, 190);
+  width: 100%;
+  height: 35px;
+  border-radius: 10px;
+  margin-top: 13px;
+  padding: 0px 0px 0px 15px;
+}
+
+.dash form .dash-title p {
+  margin-bottom: 30px;
+  font-size: 16px;
+}
+
+.dash form .dash-data {
+  padding: 0px 0px 30px 0px;
+}
+
+.dash form .dash-img {
+  position: relative;
+}
+
+.dash form .dash-data img {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+}
+
+.dash form .dash-data .dash-img {
+  position: relative;
+  border: -1px solid transparent;
+  background: #fff;
+  background-clip: padding-box;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dash form .dash-data .dash-img::after {
+  content: '';
+  position: absolute;
+  top: -3px;
+  bottom: -3px;
+  left: -3px;
+  right: -3px;
+  background: linear-gradient(to bottom left, #800080, #ff0000af, #ffa500, #ffff00);
+  z-index: -1;
+  border-radius: 50%;
+}
+
+.dash form .dash-data .data-cnt {
+  align-items: center;
+}
+
+.dash form .dash-data .data-cnt i {
+  color: #8b8a8a;
+}
+
+.dash .add-more {
+  background-color: #fff;
+  color: #000;
+  border: 2px solid rgb(192, 190, 190);
+  width: 10%;
+  height: 35px;
+  border-radius: 10px;
+}
+
+.dash form .dash-data .remove {
+  background-color: transparent;
+  border: none;
+}
+
+.dash form input[type=color] {
+  width: 100%;
+  border: 2px solid rgb(192, 190, 190);
+  height: 35px;
+  border-radius: 10px;
+}
+
+.dash form input[type=angle] {
+  width: 10%;
+  border: 2px solid rgb(192, 190, 190);
+  height: 35px;
+  border-radius: 10px;
+  padding: 0px 14px;
+  ;
+}
+
+.dash-setting {
+  padding: 50px;
+}
+
+.dash-setting .dash-page {
+  padding: 0px 0px 30px 0px;
+}
+
+.dash-setting form .dash-page input[type="text"] {
+  width: 40%;
+  height: 45px;
+  border: 2px solid rgb(192, 190, 190);
+  margin-right: 10px;
+}
+
+.dash-setting form .dash-page input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgb(192, 190, 190);
+  margin-right: 10px;
+}
+
+.dash-setting form .dash-page label {
+  display: flex;
+  align-items: center;
+}
+
+.dash-setting form p {
+  font-weight: 500;
+  font-size: 17px;
+  margin-bottom: 10px;
+  margin-top: 20px;
+}
+
+.dash-setting form input[type=submit] {
+  background-color: #048161;
+  border: none;
+  margin-top: 50px;
+  color: #fff;
+  border-radius: 10px;
+  width: 8%;
+  height: 35px;
+}
+
+.dash-setting h5 {
+  font-size: 1.5rem;
+}
+
+.links {
+  display: flex;
+  justify-content: space-between;
+}
+
+.links a {
+  text-decoration: none;
+  color: #000;
+}
+
+.insta .dash-img {
+  position: relative;
+}
+
+.insta img {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+}
+
+.insta .dash-img {
+  position: relative;
+  border: -1px solid transparent;
+  background: #fff;
+  background-clip: padding-box;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 10px;
+}
+
+.insta .dash-img::after {
+  content: '';
+  position: absolute;
+  top: -3px;
+  bottom: -3px;
+  left: -3px;
+  right: -3px;
+  background: linear-gradient(to bottom left, #800080, #ff0000af, #ffa500, #ffff00);
+  z-index: -1;
+  border-radius: 50%;
+}
+
+.insta-setup {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+body {
+  margin-top: 1em;
+}
+
+.all-stories {
+  margin-bottom: 2em;
+}
+
+.insta {
+  padding: 50px 0px;
+  text-align: center;
+}
+
+a:hover {
+  color: inherit;
+}
+
+section.content-body {
+  padding-top: 4em;
+}
+
+a {
+  text-decoration: none;
+}
+
+.insta-btn {
+  background-color: #048161;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 10px;
+  margin-top: 30px;
+}
+
+.text-right {
+  text-align: right;
+}
+
+#story_save {
+  width: 100%;
+  text-align: center;
+  height: 35px;
+  border-radius: 5px;
+  background: #048161;
+  display: table;
+  color: #fff;
+  font-size: 18px;
+  padding: 4px 0px 0px 0px;
+  cursor: pointer;
+  max-width: 136px;
+  border: transparent;
+}
+
+input[type="text"] {
+  width: 100%;
+  border: 2px solid rgb(192, 190, 190);
+  border-radius: 10px;
+  margin-bottom: 20px;
+  height: 35px;
+  padding: 0px 0px 0px 10px;
+  /* margin: 0px !important; */
+  padding-bottom: 0px !important;
+  vertical-align: bottom;
+  margin-top: 13px;
+}
+
+.btn-div {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 30px;
+  gap: 20px;
+}
+
+#delete-story {
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 7px 25px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.hideFirstColor {
+  display: none;
+}
+
+.right-menu a {
+  margin-left: 11px;
+}
+
+.insta-faq {
+  padding: 50px 0px;
 }
