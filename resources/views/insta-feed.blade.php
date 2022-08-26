@@ -7,8 +7,8 @@
             <img src="{{asset('image/instafeed-instagram-icon.png')}}" alt="" />
            
             <h4>Instagram Feed</h4>
-            @if(isset($post))
-        <form class="flex flex-col w-full" method="POST" action="{{ route('store.update',$post->id) }}">
+            @if(isset($data))
+        <form class="flex flex-col w-full" method="POST" action="{{ route('store.update',$data->id) }}">
             @method('post')
     @else
             <form  method="post" action="{{url('store-form')}}">
@@ -16,13 +16,13 @@
               @csrf
               <div class="fd-ttl">
                 <label for="">Feed Title</label><br />
-                <input type="hidden" name="@if(isset($post)){{$post->id}}@endif">
+                <input type="hidden" name="@if(isset($data)){{$data->id}}@endif">
                 <input
                   type="text"
                   name="title"
                   id=""
-                  placeholder="Leave empty if you don't want a title"  @if(isset($post))
-                   value="{{$post->title}}"
+                  placeholder="Leave empty if you don't want a title"  @if(isset($data))
+                   value="{{$data->title}}"
                   @endif
                 />
               </div>
@@ -37,15 +37,17 @@
                 <label for="">Post Spacing</label><br />
                 <select name="spacing" id="">
                   <option value="0">No spacing</option>
-                  <option value="5">5px</option>
-                  <option value="10">10px</option>
-                  <option value="15">15px</option>
+                  <option value="5">Small</option>
+                  <option value="10">Medium</option>
+                  <option value="15">Large</option>
                 </select>
               </div>
               <div class="col-md-6">
                 <label for="">On Click</label><br />
                 <select name="click" id="">
-                  <option value="Go to Instagram">Go to Instagram</option>
+                  <option value="go to instagram">Go to Instagram</option>
+                  <option value="open popup">Open Popup</option>
+                  <option value="do nothing">Do Nothing</option>
                 </select>
               </div>
               <div class="col-md-6">
@@ -59,8 +61,12 @@
               <div class="col-md-6">
                 <label for="">Columns</label><br />
                 <select name="column" id="">
+                  <option value="1">1</option>
                   <option value="2">2</option>
+                  <option value="3">3</option>
                   <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="5">6</option>
                 </select>
               </div>
               <div class="col-md-1">

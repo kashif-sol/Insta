@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CustomHighlight;
+use App\Models\Instagram;
 use App\Models\StoriesImages;
 use App\Models\Story;
 use Illuminate\Http\Request;
@@ -18,11 +19,16 @@ class CustomHighlightController extends Controller
        
         //// stories
         /// images
+        $user = Instagram::where('user_id','4284451936')->first();
+
         $data = Story::with('images')->where('user_id',2)->first(); 
-       
+        if(!isset($data)){
+            return view('custom-highlights');
+
+        }
    $images=$data->images;
 
-   return view('custom-highlights',compact('data','images'));
+   return view('custom-highlights',compact('data','images','user'));
 
     }
 
@@ -77,7 +83,8 @@ class CustomHighlightController extends Controller
 
     public function create(Request $request)
     {
-      
+        
+
         
         $user_id = 2;
         $storeDet =  new Story();

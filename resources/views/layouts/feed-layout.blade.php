@@ -1,11 +1,11 @@
 <div class="col-md-7 insta-lay-rgt">
-    @if(isset($feeds))
+    @if(isset($pictures))
     <h4>Preview</h4> 
    
   
     <div class="col-md-12 img-combo">
       @foreach($firstFour as $ar)
-      <img src="{{asset('assets/'.$ar)}}" style="{{'border-radius:'.$post->border.'px'.';'.'padding:'.$post->spacing.'px' }}" alt="">
+      <img src="{{asset('assets/'.$ar)}}" style="{{'border-radius:'.$data->border.'px'.';'.'padding:'.$data->spacing.'px' }}" alt="">
               
       @endforeach
     </div>

@@ -6,23 +6,24 @@
           <div class="col-md-12">
             <img src="{{asset('image/instafeed-instagram-reels-icon.png')}}" alt="" />
             <h4>Instagram Reels</h4>
-            @if(isset($post))
-            <form class="flex flex-col w-full" method="POST" action="{{ route('reel.update',$post->id) }}">
+            @if(isset($tab))
+    
+            <form class="flex flex-col w-full" method="POST" action="{{ route('reel.update',$tab->id) }}">
                 @method('post')
         @else
             <form  method="post" action="{{url('insta-reel')}}">
               @endif
               @csrf
               <div class="fd-ttl">
-                <input type="hidden" name="@if(isset($post)){{$post->id}}@endif">
+                <input type="hidden" name="@if(isset($tab)){{$tab->id}}@endif">
 
                 <label for="">Feed Title</label><br />
                 <input
                   type="text"
                   name="title"
                   id=""
-                  placeholder="Leave empty if you don't want a title"  @if(isset($post))
-                  value="{{$post->title}}"
+                  placeholder="Leave empty if you don't want a title"  @if(isset($tab))
+                  value="{{$tab->title}}"
                  @endif
                 />
               </div>
@@ -48,7 +49,7 @@
         </div>
         <div class="col-md-7 insta-lay-rgt"> 
           <h4>Preview</h4>
-          @if(!isset($post))
+          @if(!isset($tab))
           <div class="col-md-12 img-sty">
               <video src="{{asset('video/Kenady Fundings - Tony Carson Another Fix and Flip mortgage project. in progress project. Ludlow KY.mp4')}}" controls></video>
               <video src="{{asset('video/Tony Carson Finding real estate to fix and flip.mp4')}}" controls></video>

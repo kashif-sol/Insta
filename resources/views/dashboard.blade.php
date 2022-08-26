@@ -1,6 +1,6 @@
 @include('layouts.header')
 
-<body>
+
 <section>
   
 
@@ -47,16 +47,16 @@
   <section>
       <div class="container-fluid">
           <div class="row text-center insta-reel">
-            <a href="/insta-feed"><div class="col">
+            <a href="/insta-feed-show"><div class="col">
                 <img src="{{asset('image/instafeed-instagram-icon.png')}}" alt="">
                   <h6>Instagram Feed</h6>
               </div></a>
-              <a href="/insta-stories" ><div class="col hglg-img">
+              <a href="/insta-story-show" ><div class="col hglg-img">
                   
                       <img src="{{asset('image/instafeed-story.png')}}" alt="">
                   <h6>Instagram Stories</h6>
               </div></a>
-              <a href="/insta-highlights" ><div class="col">
+              <a href="/insta-highlight-show" ><div class="col">
                       <div class="dash-img">
                       <img src="{{asset('image/instafeed-highlights.png')}}" alt="">
                   </div>
@@ -69,7 +69,7 @@
                   <h6>Custom Hightlights</h6>
                   <p>No instagram connection required</p>
               </div></a>
-              <a href="/insta-reels"><div class="col">
+              <a href="/insta-reel-show"><div class="col">
                   <img src="{{asset('image/instafeed-instagram-reels-icon.png')}}" alt="">
                   <h6>Instagram Reels</h6>
               </div></a>
@@ -77,4 +77,4 @@
       </div>
   </section>
  
-</body>
+

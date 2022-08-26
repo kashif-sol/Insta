@@ -22,18 +22,18 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/dashboard', function () {
-    return view('dashboard');
-});
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// });
 Route::get('/insta-feed', function () {
     return view('insta-feed');
 });
 Route::get('/insta-stories', function () {
     return view('insta-stories');
 });
-Route::get('/insta-highlights', function () {
-    return view('insta-highlights');
-});
+// Route::get('/insta-highlights', function () {
+//     return view('insta-highlights');
+// });
 Route::get('/custom-highlights', function () {
     return view('custom-highlights');
 });
@@ -57,3 +57,8 @@ Route::post('chighlight-update/{id}',[CustomHighlightController::class,'update']
 Route::post('custom/{id}',[CustomHighlightController::class,'update'])->name('custom.update');
 Route::post('/save-story',[CustomHighlightController::class,"create"])->name("save-story");
 Route::get('custom-highlights-show',[CustomHighlightController::class,'view_stories']);
+Route::get('insta-feed-show',[InstaFeedController::class,'view_feeds']);
+Route::get('insta-story-show',[InstaStoryController::class,'view_story']);
+Route::get('insta-reel-show',[InstaReelController::class,'view_reel']);
+Route::get('insta-highlight-show',[InstaHighlightController::class,'view_highlight']);
+Route::get('dashboard',[newsFeed::class,'dashboard']);

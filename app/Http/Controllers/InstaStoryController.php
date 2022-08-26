@@ -16,13 +16,73 @@ use Instagram\Utils\MediaDownloadHelper;
 
 class InstaStoryController extends Controller
 {
+    public function view_story(){
+        $user = Instagram::where('user_id','4284451936')->first();
+
+        $data = InstaStory::where('user_id',2)->first(); 
+        if(!isset($data)){
+            return view('insta-stories');
+        }
+        $cachePool = new FilesystemAdapter('Instagram', 0, __DIR__ . '/../cache');
+        try {
+
+
+            $helper = new HelperController;
+            $api = new Api($cachePool);
+           
+            $api->login('festedurto', 'newsfeed');
+            // $profiles = $request->profile;
+            $profile = $api->getProfile('kmushtaq7');
+            // dd($profile);
+            $id=$profile->getId();
+            // $profile = $api->getProfile('kmushtaq7');
+            $fullname = $profile->getFullName();
+            $feedStories = $api->getStories($profile->getId());
+           
+            $pictures = [];
+            $stories = $feedStories->getStories();
+            
+            foreach ($stories as $stories) {
+
+                // $fileName = MediaDownloadHelper::downloadMedia($media->getDisplaySrc());
+                $pic = $stories->getDisplayUrl();
+
+                $url = $pic;
+                $downloadDir = public_path() . "/assets";
+
+                $fileName = MediaDownloadHelper::downloadMedia($url, $downloadDir);
+                array_push($pictures, $fileName);
+            }
+           
+            if($data->story=='all'){
+
+
+
+                $story = $pictures;
+                }
+                else if($data->story==2){
+                    $story = array_slice($pictures, 0, 2);
+                 
+                }
+                else{
+                    $story = array_slice($pictures, 0, 1);
+                }
+        } catch (InstagramException $e) {
+            dd($e->getMessage());
+        }
+
+        return view('insta-stories', compact('data', 'story','user'));
+
+
+    }
+
     public function index(Request $request)
     {
         $post = new InstaStory();
         $post->title = $request->title;
         $post->click = $request->click;
         $post->story = $request->story;
-        $post->user_id = $request->user_id;
+        $post->user_id = 2;
         $post->save();
         $cachePool = new FilesystemAdapter('Instagram', 0, __DIR__ . '/../cache');
         try {
@@ -32,7 +92,7 @@ class InstaStoryController extends Controller
             $api = new Api($cachePool);
             $api->login('festedurto', 'newsfeed');
             // $profiles = $request->profile;
-            $profile = $api->getProfile('imrankhan.pti');
+            $profile = $api->getProfile('ptiofficiali');
             // $profile = $api->getProfile('kmushtaq7');
             $fullname = $profile->getFullName();
             // $stories = $helper->stories($profile,$api);
@@ -71,7 +131,7 @@ class InstaStoryController extends Controller
             dd($e->getMessage());
         }
 
-        return view('insta-stories', compact('post', 'story'));
+        return redirect('insta-story-show');
     }
     public function update(Request $request, $id)
     {

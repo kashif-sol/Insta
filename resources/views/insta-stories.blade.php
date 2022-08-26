@@ -16,8 +16,8 @@
           <div class="col-md-12">
             <img src="{{asset('image/instafeed-story.png')}}" alt="" />
             <h4>Instagram Stories</h4>
-            @if(isset($post))
-            <form class="flex flex-col w-full" method="POST" action="{{ route('story.update',$post->id) }}">
+            @if(isset($data))
+            <form class="flex flex-col w-full" method="POST" action="{{ route('story.update',$data->id) }}">
                 @method('post')
         @else
             <form  method="post" action="{{url('insta-story')}}">
@@ -25,15 +25,15 @@
               @csrf
 
               <div class="fd-ttl">
-                <input type="hidden" name="@if(isset($post)){{$post->id}}@endif">
+                <input type="hidden" name="@if(isset($data)){{$data->id}}@endif">
 
                 <label for="">Feed Title</label><br />
                 <input
                   type="text"
                   name="title"
                   id=""
-                  placeholder="Leave empty if you don't want a title" @if(isset($post))
-                  value="{{$post->title}}"
+                  placeholder="Leave empty if you don't want a title" @if(isset($data))
+                  value="{{$data->title}}"
                  @endif
                 />
               </div>
@@ -41,15 +41,18 @@
               <div class="col-md-6">
                 <label for="">On Click</label><br />
                 <select name="click" id="">
-                  <option value="Go To Instagram">Go to Instagram</option>
+                  <option value="go to instagram">Go to Instagram</option>
+                  <option value="open popup">Open Popup</option>
+                  <option value="do nothing">Do Nothing</option>
                 </select>
               </div>
               <div class="col-md-6">
                   <label for="">Stroy Selection</label><br />
                   <select name="story" id="">
                     <option value="all">All</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
+                    <option value="manual">Manual</option>
+                    {{-- <option value="1">1</option>
+                    <option value="2">2</option> --}}
                   </select>
                 </div>
               <div class="col-md-12">
@@ -61,7 +64,7 @@
         </div>
         <div class="col-md-7 insta-lay-rgt">
           <h4>Preview</h4>
-          @if(isset($post))
+          @if(isset($data))
           
           <div class="col-md-12 img-combo">
             @foreach($story as $ar)
