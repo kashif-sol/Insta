@@ -8,19 +8,23 @@ use Instagram\Api;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Illuminate\Http\Request;
 use Instagram\Exception\InstagramException;
+use Illuminate\Support\Facades\Auth;
 
 use Psr\Cache\CacheException;
 
 class newsFeed extends Controller
 {
     public function dashboard()
-    {   
-        $user = Instagram::where('user_id','4284451936')->first();
+    {    $shop = Auth::user();
+        $shop_id = $shop->id;
+        $user = Instagram::where('user_id' , $shop_id)->first();
         // dd($user);
         return view('dashboard',compact('user'));
     }
     public function instaFeeds(Request $request)
     {
+        $shop = Auth::user();
+        $shop_id = $shop->id;
         $cachePool = new FilesystemAdapter('Instagram', 0, __DIR__ . '/../cache');
         try {
 
@@ -30,15 +34,16 @@ class newsFeed extends Controller
             $username=$request->profile;
             $profile = $api->getProfile($username);
             $fullname = $profile->getFullName();
-            $id=$profile->getId();
+            $user = $profile->getUserName();
+           
         
         } catch (InstagramException $e) {
             dd($e->getMessage());
         }
 
         $store = new Instagram();
-        $store->user_id=$id;
-        $store->username = $fullname;
+        $store->user_id=$shop_id;
+        $store->username = $user;
       
         $store->user_fullname = $fullname;
         $store->save();

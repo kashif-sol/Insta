@@ -18,10 +18,10 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
+Route::group(['middleware' => 'verify.shopify'], function () {
+    Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
 // });
@@ -62,3 +62,4 @@ Route::get('insta-story-show',[InstaStoryController::class,'view_story']);
 Route::get('insta-reel-show',[InstaReelController::class,'view_reel']);
 Route::get('insta-highlight-show',[InstaHighlightController::class,'view_highlight']);
 Route::get('dashboard',[newsFeed::class,'dashboard']);
+});

@@ -1,4 +1,24 @@
 @include('layouts.header')
+
+@php
+
+$clicks = array(
+  array("title" => "Go to Instagram" , "value" => "GI"),
+  array("title" => "Do nothing" , "value" => "DN"),
+);
+
+$selections = array(
+  array("title" => "All" , "value" => "A"),
+  array("title" => "Manual" , "value" => "M"),
+);
+
+
+
+$openPost = "GI";
+  if(isset($tab->click))
+    $openPost = $tab->click;
+
+@endphp
 <section>
     <div class="container-fluid">
       <div class="row">
@@ -6,16 +26,10 @@
           <div class="col-md-12">
             <img src="{{asset('image/instafeed-instagram-reels-icon.png')}}" alt="" />
             <h4>Instagram Reels</h4>
-            @if(isset($tab))
-    
-            <form class="flex flex-col w-full" method="POST" action="{{ route('reel.update',$tab->id) }}">
-                @method('post')
-        @else
             <form  method="post" action="{{url('insta-reel')}}">
-              @endif
-              @csrf
+              @sessionToken
               <div class="fd-ttl">
-                <input type="hidden" name="@if(isset($tab)){{$tab->id}}@endif">
+                <input type="hidden" name="id" value="@if(isset($tab)){{$tab->id}}@endif">
 
                 <label for="">Feed Title</label><br />
                 <input
@@ -31,13 +45,17 @@
               <div class="col-md-6">
                 <label for="">On Click</label><br />
                 <select name="click" id="">
-                  <option value="Go to Instagram">Go to Instagram</option>
+                  @foreach ( $clicks as  $click)
+                  <option @if(isset($tab)) @if($tab->click == $click['value']) selected @endif @endif value="{{$click['value']}}">{{$click['title']}}</option>
+                @endforeach
                 </select>
               </div>
               <div class="col-md-6">
                   <label for="">Reel Selection</label><br />
                   <select name="reel" id="">
-                    <option value="All">All</option>
+                    @foreach ( $selections as  $selection)
+                  <option @if(isset($tab)) @if($tab->reel == $selection['value']) selected @endif @endif value="{{$selection['value']}}">{{$selection['title']}}</option>
+                @endforeach
                   </select>
                 </div>
               <div class="col-md-12">
@@ -58,7 +76,14 @@
           @else 
           <div class="col-md-12 img-sty">
             @foreach($reel_data as $ar)
-            <video src="{{asset('reels/'.$ar)}}" controls></video>
+            @php
+            $link = "#"; 
+              if($openPost == "GI")
+                   $link = $ar["link"];
+            @endphp
+              <a href="{{$link}}">
+                <video src="{{asset('reels/'.$ar["file"])}}" controls></video>
+              </a>
             @endforeach
           </div>
             @endif

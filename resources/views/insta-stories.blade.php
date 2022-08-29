@@ -1,4 +1,11 @@
 @include('layouts.header')
+
+@php
+$openPost = "GI";
+if(isset($data->click))
+  $openPost = $data->click;
+
+@endphp
 <style>
   .insta-lay-rgt .img-combo img {
     width: 150px;
@@ -16,16 +23,11 @@
           <div class="col-md-12">
             <img src="{{asset('image/instafeed-story.png')}}" alt="" />
             <h4>Instagram Stories</h4>
-            @if(isset($data))
-            <form class="flex flex-col w-full" method="POST" action="{{ route('story.update',$data->id) }}">
-                @method('post')
-        @else
             <form  method="post" action="{{url('insta-story')}}">
-              @endif
-              @csrf
+              @sessionToken
 
               <div class="fd-ttl">
-                <input type="hidden" name="@if(isset($data)){{$data->id}}@endif">
+                <input type="hidden" name="id" value="@if(isset($data)){{$data->id}}@endif">
 
                 <label for="">Feed Title</label><br />
                 <input
@@ -41,18 +43,15 @@
               <div class="col-md-6">
                 <label for="">On Click</label><br />
                 <select name="click" id="">
-                  <option value="go to instagram">Go to Instagram</option>
-                  <option value="open popup">Open Popup</option>
-                  <option value="do nothing">Do Nothing</option>
+                  <option @if(isset($data)) @if($data->click == "GI") selected @endif  @endif value="GI">Go to Instagram</option>
+                  <option value="NO" @if(isset($data)) @if($data->click == "NO") selected @endif  @endif >Do Nothing</option>
                 </select>
               </div>
               <div class="col-md-6">
                   <label for="">Stroy Selection</label><br />
                   <select name="story" id="">
-                    <option value="all">All</option>
-                    <option value="manual">Manual</option>
-                    {{-- <option value="1">1</option>
-                    <option value="2">2</option> --}}
+                    <option value="all" @if(isset($data)) @if($data->story == "all") selected @endif  @endif >All</option>
+                    <option value="manual" @if(isset($data)) @if($data->story == "manual") selected @endif  @endif >Manual</option>
                   </select>
                 </div>
               <div class="col-md-12">

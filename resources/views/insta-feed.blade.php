@@ -1,4 +1,66 @@
 @include('layouts.header')
+
+@php
+  $clicks = array(
+    array("title" => "Go to Instagram" , "value" => "GI"),
+    array("title" => "Do nothing" , "value" => "DN"),
+  );
+
+  $spaces = array(
+    array("title" => "No spacing" , "value" => "0"),
+    array("title" => "Small" , "value" => "10"),
+    array("title" => "Medium" , "value" => "20"),
+    array("title" => "Large" , "value" => "30"),
+  );
+
+  $layouts = array(
+    array("title" => "Grid" , "value" => "G"),
+    array("title" => "Slider" , "value" => "S"),
+  );
+
+  $columns = array(
+    array("title" => "4" , "value" => "4"),
+    array("title" => "1" , "value" => "1"),
+    array("title" => "2" , "value" => "2"),
+    array("title" => "3" , "value" => "3"),
+  );
+
+
+  $radiuses = array(
+    array("value" => "5" , "title" => "5px"),
+    array("value" => "10" , "title" => "10px"),
+    array("value" => "20" , "title" => "20px"),
+    array("value" => "30" , "title" => "30px"),
+  );
+  $openPost = "GI";
+  if(isset($data->click))
+    $openPost = $data->click;
+  
+  $postColumns = "col-md-3";
+  if(isset($data->column))
+    {
+      switch($data->column){
+          case 1:
+            $postColumns = "col-md-12";
+              break;
+          case 2:
+          $postColumns = "col-md-6";
+              break;
+              case 3:
+          $postColumns = "col-md-4";
+              break;
+              case 4:
+          $postColumns = "col-md-3";
+              break;
+            case 5:
+          $postColumns = "col-md-6";
+              break;
+          default:
+          $postColumns = "col-md-3";
+      }
+      
+    }
+@endphp
 <section>
     <div class="container-fluid">
       <div class="row">
@@ -7,16 +69,11 @@
             <img src="{{asset('image/instafeed-instagram-icon.png')}}" alt="" />
            
             <h4>Instagram Feed</h4>
-            @if(isset($data))
-        <form class="flex flex-col w-full" method="POST" action="{{ route('store.update',$data->id) }}">
-            @method('post')
-    @else
             <form  method="post" action="{{url('store-form')}}">
-              @endif
-              @csrf
+              @sessionToken
               <div class="fd-ttl">
                 <label for="">Feed Title</label><br />
-                <input type="hidden" name="@if(isset($data)){{$data->id}}@endif">
+                <input type="hidden" name="id" value="@if(isset($data)){{$data->id}}@endif">
                 <input
                   type="text"
                   name="title"
@@ -29,48 +86,46 @@
               <div class="lay-set">
                 <label for="">Layout</label><br />
                 <select name="layout" id="">
-                  <option value="slider">Slider</option>
+                  @foreach ( $layouts as  $layout)
+                    <option @if(isset($data)) @if($data->layout == $layout['value']) selected @endif @endif value="{{$layout['value']}}">{{$layout['title']}}</option>
+                  @endforeach
                 </select>
               </div>
               <div class="row">
               <div class="col-md-6">
                 <label for="">Post Spacing</label><br />
                 <select name="spacing" id="">
-                  <option value="0">No spacing</option>
-                  <option value="5">Small</option>
-                  <option value="10">Medium</option>
-                  <option value="15">Large</option>
+                  @foreach ( $spaces as  $space)
+                    <option @if(isset($data)) @if($data->spacing == $space['value']) selected @endif @endif value="{{$space['value']}}">{{$space['title']}}</option>
+                  @endforeach
                 </select>
               </div>
               <div class="col-md-6">
                 <label for="">On Click</label><br />
                 <select name="click" id="">
-                  <option value="go to instagram">Go to Instagram</option>
-                  <option value="open popup">Open Popup</option>
-                  <option value="do nothing">Do Nothing</option>
+                  @foreach ( $clicks as  $click)
+                  <option @if(isset($data)) @if($data->click == $click['value']) selected @endif @endif value="{{$click['value']}}">{{$click['title']}}</option>
+                @endforeach
                 </select>
               </div>
               <div class="col-md-6">
                 <label for="">Border Radius</label><br />
                 <select name="border" id="">
-                  <option value="10">10px</option>
-                  <option value="5">5px</option>
-                  <option value="7">7px</option>
+                  @foreach ( $radiuses as  $radius)
+                  <option @if(isset($data)) @if($data->border == $radius['value']) selected @endif @endif value="{{$radius['value']}}">{{$radius['title']}}</option>
+                @endforeach
                 </select>
               </div>
               <div class="col-md-6">
                 <label for="">Columns</label><br />
                 <select name="column" id="">
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="5">6</option>
+                  @foreach ( $columns as  $column)
+                  <option @if(isset($data)) @if($data->column == $column['value']) selected @endif @endif value="{{$column['value']}}">{{$column['title']}}</option>
+                @endforeach
                 </select>
               </div>
               <div class="col-md-1">
-                  <input type="checkbox" name="load_more" value="checked" id="">
+                  <input @if(isset($data)) @if($data->load_more) checked @endif @endif type="checkbox" name="load_more" value="1" id="">
               </div>
               <div class="col-md-11">
                   <h6>Allow visitors to load more posts</h6>
@@ -83,7 +138,33 @@
             </form>
           </div>
         </div>
-        @include('layouts.feed-layout')
+      
+        <div class="col-md-7 insta-lay-rgt">
+          <h4>Preview</h4> 
+          @if(isset($pictures))
+          <div class="row img-combo">
+            @foreach($pictures as $ar)
+
+            @php
+            $link = "#"; 
+              if($openPost == "GI") 
+                   $link = $ar["link"]; 
+            @endphp
+                  
+            <div class="instafeeds {{$postColumns }}">
+              <a href="{{$link}}">
+                  <img src="{{asset('assets/'.$ar["file"])}}" style="border: 1px solid transparent; {{'border-radius:'.$data->border.'px'.';'.'margin:'.$data->spacing.'px' }}" alt="">
+              </a>
+            </div>    
+            @endforeach
+          </div>
+          @else
+          <div class="col-md-12 img-pwr">
+              <img src="{{asset('image/powered-by-instafeed.png')}}" alt="">
+            </div>
+            @endif
+        </div>
+
       </div>
     </div>
   </section>

@@ -3,9 +3,121 @@
 namespace App\Http\Controllers;
 use Instagram\Model\ReelsFeed;
 use Illuminate\Http\Request;
+use App\Models\Instagram;
+use App\Models\InstaHighlight;
+use Session;
+use Instagram\Api;
+use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+use Instagram\Exception\InstagramException;
+use Instagram\Model\Media;
+use Instagram\Utils\MediaDownloadHelper;
+
+
 
 class HelperController extends Controller
 {
+    public function insta_stories($username = "ptiofficial")
+    {
+        $cachePool = new FilesystemAdapter('Instagram', 0, __DIR__ . '/../cache');
+        $stories = [];
+        try {
+            $api = new Api($cachePool);
+            $api->login('festedurto', 'newsfeed');
+            $profile = $api->getProfile($username);
+            sleep(1);
+            $feedStories = $api->getStories($profile->getId());
+
+            $stories = $feedStories->getStories();            
+        }
+        catch (InstagramException $e) {
+            dd($e->getMessage());
+        }
+
+        return $stories;
+    }
+
+    public function insta_feeds($username = "ptiofficial")
+    {
+        $feeds = [];
+        $cachePool = new FilesystemAdapter('Instagram', 0, __DIR__ . '/../cache');
+        $my_feeds = [];
+        try {
+            $api = new Api($cachePool);
+            $api->login('festedurto', 'newsfeed');
+            $profile = $api->getProfile($username);
+            sleep(1);
+            $feeds = $profile->getMedias(); 
+            foreach ($feeds as $media ) {
+                $pic = $media->getDisplaySrc();
+                $link = $media->getLink();
+                $downloadDir = public_path() . "/feeds";
+                $fileName = MediaDownloadHelper::downloadMedia($pic, $downloadDir);
+                $my_feeds[] = array(
+                    "link" => $link,
+                    "file" => $fileName
+                );
+            }
+                       
+        }
+        catch (InstagramException $e) {
+            dd($e->getMessage());
+        }
+
+        return $my_feeds;
+    }
+
+
+    public function insta_reels($username = "kmushtaq7")
+    {
+        $reelsFeed = [];
+        $cachePool = new FilesystemAdapter('Instagram', 0, __DIR__ . '/../cache');
+        try {
+            $api = new Api($cachePool);
+            $api->login('festedurto', 'newsfeed');
+            $profile = $api->getProfile($username);
+            $id = $profile->getId();
+            sleep(1);
+            $reelsFeed = $api->getReels($id); 
+         
+        }
+        catch (InstagramException $e) {
+            dd($e->getMessage());
+        }
+
+        return $reelsFeed;
+    }
+    public function insta_highlights($username = "ptiofficial")
+    {
+     
+        $cachePool = new FilesystemAdapter('Instagram', 0, __DIR__ . '/../cache');
+        try {
+            $api = new Api($cachePool);
+            $api->login('festedurto', 'newsfeed');
+            $profile = $api->getProfile($username);
+            sleep(1);
+            $storyHighlights = $api->getStoryHighlightsFolder($profile->getId());
+            $my_feeds = [];
+            foreach ($storyHighlights->getFolders() as $folder) {
+                $folder = $api->getStoriesOfHighlightsFolder($folder);
+                $link = $folder->getUrl();
+                $Stories=$folder->getStories()[0];
+                $pic = $Stories->getDisplayUrl();
+                $downloadDir = public_path() . "/highlights";
+                $fileName = MediaDownloadHelper::downloadMedia($pic, $downloadDir);
+                $my_feeds[] = array(
+                    "link" => $link,
+                    "file" => $fileName
+                );
+            }
+           
+        } catch (InstagramException $e) {
+            dd($e->getMessage());
+        }
+        return $my_feeds;
+
+
+    }
+
     public function stories($profile,$api)
     {
         $feedStories = $api->getStories($profile->getId());

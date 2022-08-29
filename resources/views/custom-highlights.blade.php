@@ -9,10 +9,10 @@
           @if(isset($data))
          
           <form class="flex flex-col w-full" method="POST" action="{{ route('customhighlight.update',$data->id) }}" enctype="multipart/form-data">
-            @csrf
+            @sessionToken
             @else
             <form action="{{route('save-story')}}" method="POST" enctype="multipart/form-data"> 
-              @csrf
+              @sessionToken
               @endif
             <div class="fd-ttl">
               <input type="hidden" class="session-token" name="@if(isset($data)){{$data->id}}@endif" value="" />

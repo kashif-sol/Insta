@@ -11,97 +11,40 @@ use Illuminate\Http\Request;
 use Instagram\Exception\InstagramException;
 use Instagram\Model\Media;
 use Instagram\Utils\MediaDownloadHelper;
+use Illuminate\Support\Facades\Auth;
 
 class InstaHighlightController extends Controller
 {
     public function view_highlight()
-    {
-        $user = Instagram::where('user_id', '4284451936')->first();
-        $tab = InstaHighlight::where('user_id', 2)->first();
+    {  $shop = Auth::user();
+        $shop_id = $shop->id;
+        $user = Instagram::where('user_id', $shop_id)->first();
+        $tab = InstaHighlight::where('user_id', $shop_id)->first();
+       
+        $pictures = [];
+        $helper = new HelperController;
+        $highlight=$helper->insta_highlights($user->username);
+     
+    return view('insta-highlights', compact('tab','highlight','user','pictures'));
 
-        $cachePool = new FilesystemAdapter('Instagram', 0, __DIR__ . '/../cache');
-        try {
+}
 
 
-            $helper = new HelperController;
-            $api = new Api($cachePool);
-            $api->login('festedurto', 'newsfeed');
-            $profile = $api->getProfile('sports');
-            $fullname = $profile->getFullName();
-            $pictures = [];
-            $storyHighlights = $api->getStoryHighlightsFolder($profile->getId());
-            
-            foreach ($storyHighlights->getFolders() as $folder) {
-                $folder = $api->getStoriesOfHighlightsFolder($folder);
-                $url=$folder->getStories();
-            
-                foreach ($url as $value) {
-                 $pic= $value->getDisplayUrl();
-                 $url = $pic;
-                 $downloadDir = public_path() . "/highlights";
-                 $fileName = MediaDownloadHelper::downloadMedia($url, $downloadDir);
-                 array_push($pictures, $fileName);
-                }
-            }
-            $highlight = array_slice($pictures, 0, 4);
-        } catch (InstagramException $e) {
-            dd($e->getMessage());
-        }
 
-        return view('insta-highlights', compact('tab','highlight','user'));
-    }
     public function index(Request $request)
     {
-        $post = new InstaHighlight();
+        $shop = Auth::user();
+        $shop_id = $shop->id;
+        if (empty($request->id))
+            $post = new InstaHighlight();
+        else
+            $post = InstaHighlight::find($request->id);
+
         $post->title = $request->title;
         $post->click = $request->click;
         $post->highlight = $request->highlight;
-        $post->user_id = 2;
+        $post->user_id = $shop_id;
         $post->save();
-
-        $cachePool = new FilesystemAdapter('Instagram', 0, __DIR__ . '/../cache');
-        try {
-
-
-            $helper = new HelperController;
-            $api = new Api($cachePool);
-            $api->login('festedurto', 'newsfeed');
-            $profile = $api->getProfile('sports');
-            $fullname = $profile->getFullName();
-            $pictures = [];
-            $storyHighlights = $api->getStoryHighlightsFolder($profile->getId());
-            
-            foreach ($storyHighlights->getFolders() as $folder) {
-                $folder = $api->getStoriesOfHighlightsFolder($folder);
-                $url=$folder->getStories();
-            
-                foreach ($url as $value) {
-                 $pic= $value->getDisplayUrl();
-                 $url = $pic;
-                 $downloadDir = public_path() . "/highlights";
-                 $fileName = MediaDownloadHelper::downloadMedia($url, $downloadDir);
-                 array_push($pictures, $fileName);
-                }
-            }
-            $highlight = array_slice($pictures, 0, 4);
-        } catch (InstagramException $e) {
-            dd($e->getMessage());
-        }
-
-        return view('insta-highlights', compact('post','highlight','user'));
-    }
-    public function update(Request $request, $id)
-    {
-        $post = InstaHighlight::updateOrCreate(
-            [
-                'id' => $id
-            ],
-            [
-                'title' => $request->title,
-                'click' => $request->click,
-                'highlight' => $request->highlight,
-            ],
-        );
-        return view('insta-highlights', compact('post'));
+        return redirect('insta-highlight-show');
     }
 }

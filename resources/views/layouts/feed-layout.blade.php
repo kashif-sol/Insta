@@ -4,8 +4,8 @@
    
   
     <div class="col-md-12 img-combo">
-      @foreach($firstFour as $ar)
-      <img src="{{asset('assets/'.$ar)}}" style="{{'border-radius:'.$data->border.'px'.';'.'padding:'.$data->spacing.'px' }}" alt="">
+      @foreach($pictures as $ar)
+      <img src="{{asset('assets/'.$ar)}}" style="border: 1px solid transparent; {{'border-radius:'.$data->border.'px'.';'.'margin:'.$data->spacing.'px' }}" alt="">
               
       @endforeach
     </div>

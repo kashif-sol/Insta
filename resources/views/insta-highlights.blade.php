@@ -9,6 +9,24 @@
     padding: 5px;
 }
 </style>
+@php
+
+$clicks = array(
+  array("title" => "Go to Instagram" , "value" => "GI"),
+  array("title" => "Do nothing" , "value" => "DN"),
+);
+
+$selections = array(
+  array("title" => "All" , "value" => "A"),
+  array("title" => "Manual" , "value" => "M"),
+);
+
+
+$openPost = "GI";
+  if(isset($tab->click))
+    $openPost = $tab->click;
+
+@endphp
 <section>
     <div class="container-fluid">
       <div class="row">
@@ -16,15 +34,11 @@
           <div class="col-md-12 in-hg"> 
             <img src="{{asset('image/instafeed-highlights.png')}}" alt="" />
             <h4>Instagram Highlights</h4>
-            @if(isset($tab))
-            <form class="flex flex-col w-full" method="POST" action="{{ route('highlight.update',$tab->id) }}">
-                @method('post')
-        @else
-            <form  method="post" action="{{url('insta-highlight')}}">
-              @endif
-              @csrf
+         
+            <form class="flex flex-col w-full" method="POST" action="{{ url('insta-highlight') }}">
+              @sessionToken
               <div class="fd-ttl">
-                <input type="hidden" name="@if(isset($tab)){{$tab->id}}@endif">
+                <input type="hidden" name="id" value="@if(isset($tab)){{$tab->id}}@endif">
 
                 <label for="">Feed Title</label><br />
                 <input
@@ -40,13 +54,17 @@
               <div class="col-md-6">
                 <label for="">Onclick</label><br />
                 <select name="click" id="">
-                  <option value="Go to Instagram">Go to Instagram</option>
+                  @foreach ( $clicks as  $click)
+                  <option @if(isset($tab)) @if($tab->click == $click['value']) selected @endif @endif value="{{$click['value']}}">{{$click['title']}}</option>
+                @endforeach
                 </select>
               </div>
               <div class="col-md-6">
                 <label for="">Highlights Selection</label><br />
                 <select name="highlight" id="">
-                  <option value="All">All</option>
+                  @foreach ( $selections as  $selection)
+                <option @if(isset($tab)) @if($tab->reel == $selection['value']) selected @endif @endif value="{{$selection['value']}}">{{$selection['title']}}</option>
+              @endforeach
                 </select>
               </div>
               <div class="col-md-12">
@@ -61,7 +79,14 @@
           @if(isset($tab))
           <div class="col-md-12 img-combo">
             @foreach($highlight as $ar)
-              <img src="{{asset('highlights/'.$ar)}}" alt="">
+            @php
+            $link = "#"; 
+              if($openPost == "GI")
+                   $link = $ar["link"]; 
+            @endphp
+             <a href="{{$link}}">
+              <img src="{{asset('highlights/'.$ar["file"])}}" alt="">
+             </a>
               @endforeach
           </div>
           @endif
