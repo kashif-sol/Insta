@@ -35,7 +35,15 @@
   $openPost = "GI";
   if(isset($data->click))
     $openPost = $data->click;
-  
+
+  $border = 0;
+  if(isset($data->border))
+    $border = $data->border;
+
+  $spacing = 0;
+  if(isset($data->spacing))
+    $spacing = $data->spacing;
+
   $postColumns = "col-md-3";
   if(isset($data->column))
     {
@@ -151,9 +159,9 @@
                    $link = $ar["link"]; 
             @endphp
                   
-            <div class="instafeeds {{$postColumns }}">
+            <div class="instafeeds {{$postColumns }}" style="margin:{{$spacing}}px">
               <a href="{{$link}}">
-                  <img src="{{asset('assets/'.$ar["file"])}}" style="border: 1px solid transparent; {{'border-radius:'.$data->border.'px'.';'.'margin:'.$data->spacing.'px' }}" alt="">
+                  <img src="/feeds/{{$ar["file"]}}" style="border: 1px solid transparent; {{'border-radius:'.$border.'px'.';' }}" alt="">
               </a>
             </div>    
             @endforeach

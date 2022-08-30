@@ -7,7 +7,7 @@ use App\Http\Controllers\InstaReelController;
 use App\Http\Controllers\InstaStoryController;
 use App\Http\Controllers\newsFeed;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\SettingsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -56,10 +56,20 @@ Route::post('custom',[CustomHighlightController::class,'index']);
 Route::post('chighlight-update/{id}',[CustomHighlightController::class,'update'])->name('customhighlight.update');
 Route::post('custom/{id}',[CustomHighlightController::class,'update'])->name('custom.update');
 Route::post('/save-story',[CustomHighlightController::class,"create"])->name("save-story");
-Route::get('custom-highlights-show',[CustomHighlightController::class,'view_stories']);
-Route::get('insta-feed-show',[InstaFeedController::class,'view_feeds']);
+Route::get('custom-highlights-show',[CustomHighlightController::class,'view_stories'])->name("custom-highlights-show");
+Route::get('insta-feed-show',[InstaFeedController::class,'view_feeds'])->name("insta-feed-show");
 Route::get('insta-story-show',[InstaStoryController::class,'view_story']);
-Route::get('insta-reel-show',[InstaReelController::class,'view_reel']);
-Route::get('insta-highlight-show',[InstaHighlightController::class,'view_highlight']);
-Route::get('dashboard',[newsFeed::class,'dashboard']);
+Route::get('insta-reel-show',[InstaReelController::class,'view_reel'])->name("insta-reel-show");
+Route::get('insta-highlight-show',[InstaHighlightController::class,'view_highlight'])->name("insta-highlight-show");
+Route::get('dashboard',[newsFeed::class,'dashboard'])->name("dashboard");
+Route::get('/faq' , function(){
+    return view('faq');
 });
+
+Route::get('/settings',[SettingsController::class,"index"])->name("settings");
+Route::any('/save-settings',[SettingsController::class,"create"])->name("save-settings");
+Route::any('/delete-insta',[newsFeed::class,"delete_insta"]);
+});
+
+
+Route::get('/delete-image/{id}',[CustomHighlightController::class,"delete_image"]);

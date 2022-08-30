@@ -4,19 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\Instagram;
 use App\Models\InstaHighlight;
-use Session;
-use Instagram\Api;
-use Symfony\Component\Cache\Adapter\FilesystemAdapter;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
-use Instagram\Exception\InstagramException;
-use Instagram\Model\Media;
-use Instagram\Utils\MediaDownloadHelper;
 use Illuminate\Support\Facades\Auth;
 
 class InstaHighlightController extends Controller
 {
     public function view_highlight()
-    {  $shop = Auth::user();
+    {  
+        $shop = Auth::user();
         $shop_id = $shop->id;
         $user = Instagram::where('user_id', $shop_id)->first();
         $tab = InstaHighlight::where('user_id', $shop_id)->first();
@@ -42,9 +38,10 @@ class InstaHighlightController extends Controller
 
         $post->title = $request->title;
         $post->click = $request->click;
-        $post->highlight = $request->highlight;
+        $post->highlight = "A";
         $post->user_id = $shop_id;
         $post->save();
-        return redirect('insta-highlight-show');
+        return Redirect::tokenRedirect('insta-highlight-show', ['notice' => 'Congratulations ! Your Feeds has been saved']);
+   
     }
 }

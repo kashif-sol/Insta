@@ -4,14 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\InstaFeed;
 use App\Models\Instagram;
-use Session;
-use Instagram\Api;
-use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Illuminate\Http\Request;
-use Instagram\Exception\InstagramException;
-use Instagram\Model\Media;
-use Instagram\Utils\MediaDownloadHelper;
-
+use Illuminate\Support\Facades\Redirect;
 
 class InstaFeedController extends Controller
 {
@@ -25,6 +19,7 @@ class InstaFeedController extends Controller
 }
     public function index(Request $request)
     {
+        
         if(empty($request->id))
             $post = new InstaFeed();
         else
@@ -41,8 +36,9 @@ class InstaFeedController extends Controller
         $post->load_more = $request->load_more;
         $post->user_id = 1;
         $post->save();
-        
-        return redirect('insta-feed-show');
+    
+        return Redirect::tokenRedirect('insta-feed-show', ['notice' => 'Congratulations ! Your Feeds has been saved']);
+         
     }
 
 }

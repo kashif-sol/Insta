@@ -7,6 +7,7 @@
     <title>Insta</title>
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/custom.css" />
+    <script src="{{asset('js/bootstrap.min.js')}}" ></script>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
@@ -21,7 +22,7 @@
             <a href="dashboard"
               ><i class="fa-solid fa-house"></i> Dashboard</a
             >
-            <a href="/settings.html"
+            <a href="/settings"
               ><i class="fa-solid fa-gear"></i> Settings</a
             >
           </div>
@@ -44,16 +45,19 @@
               <div class="col-md-8 inst-sty-rgt">
                 <a href="">Rate us</a>
                 <a href="">Read installation guide</a>
-                <a href="">FAQs</a>
+                <a href="/faq">FAQs</a>
                 <a href="" class="inst-rgt-bg">Contact support</a>
               </div>
               <div class="col-md-12 dis-set">
+                <form action="{{url('delete-insta')}}" method="get">
+                  @sessionToken
                 <p>
                   @if(isset($user))
                   Connected to:<span>{{$user->username}}</span>
-                  <button >Disconnect</button>
+                  <button type="submit">Disconnect</button>
                   @endif
                 </p>
+              </form>
               </div>
             </div>
           </div>
@@ -80,9 +84,9 @@
     @include('shopify-app::partials.token_handler')
     @include('shopify-app::partials.flash_messages')
     @endif
+
+   
+
   </body>
 </html>
-<script>
 
-
-</script>

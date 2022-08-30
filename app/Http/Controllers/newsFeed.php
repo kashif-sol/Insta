@@ -8,6 +8,7 @@ use Instagram\Api;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Illuminate\Http\Request;
 use Instagram\Exception\InstagramException;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
 
 use Psr\Cache\CacheException;
@@ -18,9 +19,17 @@ class newsFeed extends Controller
     {    $shop = Auth::user();
         $shop_id = $shop->id;
         $user = Instagram::where('user_id' , $shop_id)->first();
-        // dd($user);
         return view('dashboard',compact('user'));
     }
+
+    public function delete_insta()
+    {
+        $shop = Auth::user();
+        $shop_id = $shop->id;
+        Instagram::where('user_id' , $shop_id)->delete();
+       return Redirect::tokenRedirect('dashboard', ['notice' => 'Your account has been disconnected.']);
+    }
+
     public function instaFeeds(Request $request)
     {
         $shop = Auth::user();
@@ -40,36 +49,16 @@ class newsFeed extends Controller
         } catch (InstagramException $e) {
             dd($e->getMessage());
         }
-
-        $store = new Instagram();
+       
+       
+        $user_id = $shop_id;
+        $store = Instagram::firstOrNew(array('user_id' =>  $user_id));
         $store->user_id=$shop_id;
-        $store->username = $user;
-      
+        $store->username = $request->profile;
         $store->user_fullname = $fullname;
         $store->save();
+        return Redirect::tokenRedirect('dashboard', ['notice' => 'Your account has been connected.']);
         return redirect()->back();
     }
-    public function Test(Request $request)
-    {
-        $cachePool = new FilesystemAdapter('Instagram', 0, __DIR__ . '/../cache');
-        try {
-
-            $helper = new HelperController;
-            $api = new Api($cachePool);
-            $api->login('festedurto', 'newsfeed');
-            // $profiles = $request->profile;
-            // $profile = $api->getProfile($profiles);
-            $profile = $api->getProfile('kmushtaq7');
-            $fullname = $profile->getFullName();
-            $stories = $helper->stories($profile, $api);
-            $reels = $helper->reels($profile, $api);
-            $feeds = $helper->media($profile, $api);
-            dump(['stories' => $stories]);
-            dump(['reels' => $reels]);
-            dump(['feeds' => $feeds]);
-            dump(['fullname' => $fullname]);
-        } catch (InstagramException $e) {
-            dd($e->getMessage());
-        }
-    }
+    
 }

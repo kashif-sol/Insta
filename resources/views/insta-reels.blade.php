@@ -50,14 +50,7 @@ $openPost = "GI";
                 @endforeach
                 </select>
               </div>
-              <div class="col-md-6">
-                  <label for="">Reel Selection</label><br />
-                  <select name="reel" id="">
-                    @foreach ( $selections as  $selection)
-                  <option @if(isset($tab)) @if($tab->reel == $selection['value']) selected @endif @endif value="{{$selection['value']}}">{{$selection['title']}}</option>
-                @endforeach
-                  </select>
-                </div>
+             
               <div class="col-md-12">
                   <input type="submit" value="Save">
               </div>

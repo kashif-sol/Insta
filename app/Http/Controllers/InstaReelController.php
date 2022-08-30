@@ -4,20 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Models\Instagram;
 use App\Models\InstaReel;
-use Instagram\Api;
-use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Illuminate\Http\Request;
-use Instagram\Exception\InstagramException;
-use Instagram\Model\Media;
-use Instagram\Model\ReelsFeed;
 use Instagram\Utils\MediaDownloadHelper;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Auth;
 
 class InstaReelController extends Controller
 {
     public function view_reel()
     {
-        $user = Instagram::where('user_id',2)->first();
-        $tab = InstaReel::where('user_id', 1)->first();
+        $shop = Auth::user();
+        $shop_id = $shop->id;
+
+        $user = Instagram::where('user_id',$shop_id)->first();
+        $tab = InstaReel::where('user_id', $shop_id)->first();
         $reel_data = [];
         $helper = new HelperController;
          $reelsFeed = $helper->insta_reels($user->username);
@@ -41,6 +41,8 @@ class InstaReelController extends Controller
     }
     public function index(Request $request)
     {
+        $shop = Auth::user();
+        $shop_id = $shop->id;
 
         if(empty($request->id))
             $post = new InstaReel();
@@ -49,10 +51,10 @@ class InstaReelController extends Controller
 
         $post->title = $request->title;
         $post->click = $request->click;
-        $post->reel = $request->reel;
-        $post->user_id = 1;
+        $post->reel = "A";
+        $post->user_id = $shop_id;
         $post->save();
-        return redirect('insta-reel-show');
+        return Redirect::tokenRedirect('insta-reel-show', ['notice' => 'Congratulations ! Your Feeds has been saved']);
     }
     
 }

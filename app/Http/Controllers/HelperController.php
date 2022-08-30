@@ -47,7 +47,9 @@ class HelperController extends Controller
             $profile = $api->getProfile($username);
             sleep(1);
             $feeds = $profile->getMedias(); 
+            $i = 0;
             foreach ($feeds as $media ) {
+                if ($i++ > 3) break;
                 $pic = $media->getDisplaySrc();
                 $link = $media->getLink();
                 $downloadDir = public_path() . "/feeds";
@@ -88,7 +90,7 @@ class HelperController extends Controller
     }
     public function insta_highlights($username = "ptiofficial")
     {
-     
+        $my_feeds = [];
         $cachePool = new FilesystemAdapter('Instagram', 0, __DIR__ . '/../cache');
         try {
             $api = new Api($cachePool);
@@ -96,8 +98,9 @@ class HelperController extends Controller
             $profile = $api->getProfile($username);
             sleep(1);
             $storyHighlights = $api->getStoryHighlightsFolder($profile->getId());
-            $my_feeds = [];
+           $i = 0;
             foreach ($storyHighlights->getFolders() as $folder) {
+                if ($i++ > 3) break;
                 $folder = $api->getStoriesOfHighlightsFolder($folder);
                 $link = $folder->getUrl();
                 $Stories=$folder->getStories()[0];
