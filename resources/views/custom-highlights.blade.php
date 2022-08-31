@@ -1,7 +1,7 @@
 @include('layouts.header')
 @php
   $color_type = "D";
-  $color_is = "#800080";
+  $color_is = "#fff";
   if(isset($data->color_type))
   {
     $color_type = $data->color_type;
