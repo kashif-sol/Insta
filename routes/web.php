@@ -1,5 +1,5 @@
 <?php
-
+header("Access-Control-Allow-Origin: *");
 use App\Http\Controllers\CustomHighlightController;
 use App\Http\Controllers\InstaFeedController;
 use App\Http\Controllers\InstaHighlightController;
@@ -74,5 +74,5 @@ Route::any('/save-settings',[SettingsController::class,"create"])->name("save-se
 Route::any('/delete-insta',[newsFeed::class,"delete_insta"]);
 });
 
-
+Route::any('/shop-stories',[CustomHighlightController::class,"shop_stories"]);
 Route::get('/delete-image/{id}',[CustomHighlightController::class,"delete_image"]);

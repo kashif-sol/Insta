@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use App\Models\settings;
 
 class CustomHighlightController extends Controller
 {
@@ -38,6 +40,18 @@ class CustomHighlightController extends Controller
     {
         StoriesImages::find($id)->delete();
         return array("status" => true , "message" => "Image deleted");
+    }
+
+    public function shop_stories(Request $request)
+    {
+        $shop = User::where("name", $request->shop)->first();
+        $stories = Story::with("images")
+        ->where("user_id" ,$shop->id)
+        ->get();
+
+        $settings = settings::where("shop_id" ,$shop->id)->first();
+        return view("shopify.index",compact('settings' , 'stories'))->render();
+       
     }
 
     public function create(Request $request)
