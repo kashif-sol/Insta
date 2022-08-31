@@ -44,7 +44,7 @@
               </div>
               <div class="col-md-8 inst-sty-rgt">
                 <a target="_blank" href="https://apps.shopify.com/insta-story-style-header">⭐ Rate us</a>
-                <a href="">Read installation guide</a>
+                <a href="/installation-guide">Read installation guide</a>
                 <a href="/faq">FAQs</a>
                 <a target="_blank"  href="mailto:info@instastores.co.uk" class="inst-rgt-bg">💬 Contact support</a>
               </div>

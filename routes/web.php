@@ -66,6 +66,9 @@ Route::get('/faq' , function(){
     return view('faq');
 });
 
+Route::get('/installation-guide' , function(){
+    return view('installation-guide');
+});
 Route::get('/settings',[SettingsController::class,"index"])->name("settings");
 Route::any('/save-settings',[SettingsController::class,"create"])->name("save-settings");
 Route::any('/delete-insta',[newsFeed::class,"delete_insta"]);
