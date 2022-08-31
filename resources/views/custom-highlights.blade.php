@@ -234,7 +234,7 @@
            reader.readAsDataURL(file);
            }
          });
-       });
+        
 
         $(document).on('click', '.remove', function() {
             var id = $(this).data("id");
