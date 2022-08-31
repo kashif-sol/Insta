@@ -47,12 +47,12 @@
   <section>
       <div class="container-fluid">
           <div class="row text-center insta-reel">
-            <a href="#"><div class="lock-set hglg-img">
+            <a href="#"><div class="col lock-set hglg-img">
                 <img src="{{asset('image/instafeed-instagram-icon.png')}}" alt="">
                   <h6>Instagram Feed</h6>
                   <div class="lock-on">
                     <img src="image/instafeed-lock.png" alt="">
-                    <p>Upgrade to unlock</p>
+                    <p>Working on Update</p>
                 </div>
               </div></a>
               <a href="#" >
@@ -62,7 +62,7 @@
                   <h6>Instagram Stories</h6>
                   <div class="lock-on">
                     <img src="image/instafeed-lock.png" alt="">
-                    <p>Upgrade to unlock</p>
+                    <p>Working on Update</p>
                 </div>
               </div>
             </a>
@@ -73,7 +73,7 @@
               <h6>Instagram Hightlights</h6>
               <div class="lock-on">
                 <img src="image/instafeed-lock.png" alt="">
-                <p>Upgrade to unlock</p>
+                <p>Working on Update</p>
             </div>
               </div></a>
               <a href="/custom-highlights-show"><div class="col">
@@ -83,9 +83,13 @@
                   <h6>Custom Hightlights</h6>
                   <p>No instagram connection required</p>
               </div></a>
-              <a href="/insta-reel-show"><div class="col">
+              <a href="#"><div class="col lock-set hglg-img">
                   <img src="{{asset('image/instafeed-instagram-reels-icon.png')}}" alt="">
                   <h6>Instagram Reels</h6>
+                  <div class="lock-on">
+                    <img src="image/instafeed-lock.png" alt="">
+                    <p>Working on Update</p>
+                </div>
               </div></a>
           </div>
       </div>
