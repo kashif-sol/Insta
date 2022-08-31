@@ -85,7 +85,7 @@
                           <div class="row data-cnt">
                               <div class="col-md-4">
                                   <div class="dash-img">
-                                    <img src="{{asset($images['image_path'])}}" alt="myfeed">
+                                    <img src="{{asset($image['image_path'])}}" alt="myfeed">
                       </div>
                       </div>
                       <div class="col-md-8 upload-img">
@@ -158,8 +158,8 @@
        
        
        @if(!empty($images))
-       @foreach($images as $images)
-        <img src="{{asset($images['image_path'])}}" alt="no pic">
+       @foreach($images as $image)
+        <img src="{{asset($image['image_path'])}}" alt="no pic">
        @endforeach
        @else
             <img src="image/instafeed-story.png" alt="">
