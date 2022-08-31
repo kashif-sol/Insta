@@ -47,20 +47,34 @@
   <section>
       <div class="container-fluid">
           <div class="row text-center insta-reel">
-            <a href="/insta-feed-show"><div class="col">
+            <a href="#"><div class="lock-set hglg-img">
                 <img src="{{asset('image/instafeed-instagram-icon.png')}}" alt="">
                   <h6>Instagram Feed</h6>
+                  <div class="lock-on">
+                    <img src="image/instafeed-lock.png" alt="">
+                    <p>Upgrade to unlock</p>
+                </div>
               </div></a>
-              <a href="/insta-story-show" ><div class="col hglg-img">
+              <a href="#" >
+                <div class="col lock-set hglg-img">
                   
                       <img src="{{asset('image/instafeed-story.png')}}" alt="">
                   <h6>Instagram Stories</h6>
-              </div></a>
-              <a href="/insta-highlight-show" ><div class="col">
+                  <div class="lock-on">
+                    <img src="image/instafeed-lock.png" alt="">
+                    <p>Upgrade to unlock</p>
+                </div>
+              </div>
+            </a>
+              <a href="#" ><div class="col lock-set hglg-img">
                       <div class="dash-img">
                       <img src="{{asset('image/instafeed-highlights.png')}}" alt="">
                   </div>
               <h6>Instagram Hightlights</h6>
+              <div class="lock-on">
+                <img src="image/instafeed-lock.png" alt="">
+                <p>Upgrade to unlock</p>
+            </div>
               </div></a>
               <a href="/custom-highlights-show"><div class="col">
                       <div class="dash-img">
