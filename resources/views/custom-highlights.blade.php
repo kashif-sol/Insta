@@ -90,7 +90,7 @@
                       </div>
                       <div class="col-md-8 upload-img">
                           <label for="img-up-{{$key}}">upload image
-                          <input type="file" class="story-file" name="photos[]" id="img-up-{{$key}}" required>
+                          <input type="file" class="story-file" name="photos[]" id="img-up-{{$key}}" >
                       </label>
                       </div>
                       </div>
@@ -98,7 +98,7 @@
                     </div>
                     <div class="col-md-5">
                       <div class="col-md-12">
-                      <input type="search"  required value="{{$image['image_link']}}" name="story_link[]" id="" placeholder="search or paste a link....">
+                      <input type="search"   value="{{$image['image_link']}}" name="story_link[]" id="" placeholder="search or paste a link....">
                   </div>
                     </div>
                     <div class="col-md-1">
@@ -229,7 +229,7 @@
            let reader = new FileReader();
            reader.onload = function(event){
              var image_sec = "<img src='"+event.target.result+"'>";
-             $this.parentsUntil(".dash-data").parent().find(".dash-img").empty().append(image_sec);
+             $this.parentsUntil(".cus-hg").find(".dash-img").empty().append(image_sec);
            }
            reader.readAsDataURL(file);
            }
