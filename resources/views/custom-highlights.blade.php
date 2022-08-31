@@ -5,7 +5,7 @@
   if(isset($data->color_type))
   {
     $color_type = $data->color_type;
-    if( $color_type == "S")
+    if( $color_type == "S") 
     {
       $color_is = $data->first_color;
     }
@@ -85,12 +85,12 @@
                           <div class="row data-cnt">
                               <div class="col-md-4">
                                   <div class="dash-img">
-                          <img src="image/instafeed-story.png" alt="">
+                                    <img src="{{asset($images['image_path'])}}" alt="myfeed">
                       </div>
                       </div>
                       <div class="col-md-8 upload-img">
                           <label for="img-up-{{$key}}">upload image
-                          <input type="file" name="photos[]" id="img-up-{{$key}}" required>
+                          <input type="file" class="story-file" name="photos[]" id="img-up-{{$key}}" required>
                       </label>
                       </div>
                       </div>
@@ -121,7 +121,7 @@
                     </div>
                     <div class="col-md-8 upload-img">
                         <label for="img-up">upload image
-                        <input type="file" name="photos[]" id="img-up">
+                        <input type="file" class="story-file" name="photos[]" id="img-up">
                     </label>
                     </div>
                     </div>
@@ -220,6 +220,21 @@
     
           
         });
+
+        $(document).on("change" , ".story-file" , function(){
+          var $this = $(this);
+           const file = this.files[0];
+        
+           if (file){
+           let reader = new FileReader();
+           reader.onload = function(event){
+             var image_sec = "<img src='"+event.target.result+"'>";
+             $this.parentsUntil(".dash-data").parent().find(".dash-img").empty().append(image_sec);
+           }
+           reader.readAsDataURL(file);
+           }
+         });
+       });
 
         $(document).on('click', '.remove', function() {
             var id = $(this).data("id");
