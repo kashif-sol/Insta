@@ -43,10 +43,10 @@
                
               </div>
               <div class="col-md-8 inst-sty-rgt">
-                <a href="">Rate us</a>
+                <a target="_blank" href="https://apps.shopify.com/insta-story-style-header">⭐ Rate us</a>
                 <a href="">Read installation guide</a>
                 <a href="/faq">FAQs</a>
-                <a href="" class="inst-rgt-bg">Contact support</a>
+                <a target="_blank"  href="mailto:info@instastores.co.uk" class="inst-rgt-bg">💬 Contact support</a>
               </div>
               <div class="col-md-12 dis-set">
                 <form action="{{url('delete-insta')}}" method="get">
