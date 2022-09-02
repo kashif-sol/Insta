@@ -33,7 +33,7 @@ class newsFeed extends Controller
     public function instaFeeds(Request $request)
     {
         $shop = Auth::user();
-        $shop_id = 1;
+        $shop_id = $shop->id;
         $credentials = include_once realpath(dirname(__FILE__)) . '/credentials.php';
         $cachePool = new FilesystemAdapter('Instagram', 0, __DIR__ . '/../cache');
         try {
@@ -41,9 +41,7 @@ class newsFeed extends Controller
             $helper = new HelperController;
             $api = new Api($cachePool);
             $imapClient = new ImapClient($credentials->getImapServer(), $credentials->getImapLogin(), $credentials->getImapPassword());
-            $api->login($credentials->getLogin(), $credentials->getPassword(), $imapClient);
-            
-            $username=$request->profile;
+            $api->login($credentials->getLogin(), $credentials->getPassword(), $imapClient);            $username=$request->profile;
             $profile = $api->getProfile($username);
             $fullname = $profile->getFullName();
             $user = $profile->getUserName();
