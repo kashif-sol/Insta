@@ -58,8 +58,8 @@ class CustomHighlightController extends Controller
     {
         
         
-        $shop = Auth::user();
-        $shop_id = $shop->id;
+        // $shop = Auth::user();
+        $shop_id = 1;
         $user_id = $shop_id;
          $storeDet = Story::firstOrNew(array('user_id' =>  $user_id));
         $storeDet->title = $request->title;

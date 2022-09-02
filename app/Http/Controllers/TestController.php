@@ -15,9 +15,10 @@ class TestController extends Controller
         $user = Instagram::where('user_id',1)->first();
         $data = InstaFeed::where('user_id',1)->first(); 
         $id=Auth::user()->id;
+        // dd($id);
         $helper = new HelperController;
         $pictures = $helper->test($user->username,$id);
-        dd($pictures);
+    
         return view('insta-feed', compact('data', 'pictures','user'));
     }
 }

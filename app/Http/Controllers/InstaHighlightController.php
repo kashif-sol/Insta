@@ -12,8 +12,8 @@ class InstaHighlightController extends Controller
 {
     public function view_highlight()
     {  
-        $shop = Auth::user();
-        $shop_id = $shop->id;
+        // $shop = Auth::user();
+        $shop_id = 1;
         $user = Instagram::where('user_id', $shop_id)->first();
         $tab = InstaHighlight::where('user_id', $shop_id)->first();
        
@@ -30,7 +30,7 @@ class InstaHighlightController extends Controller
     public function index(Request $request)
     {
         $shop = Auth::user();
-        $shop_id = $shop->id;
+        $shop_id = 1;
         if (empty($request->id))
             $post = new InstaHighlight();
         else

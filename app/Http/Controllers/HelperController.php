@@ -22,11 +22,13 @@ class HelperController extends Controller
 {
     public function insta_stories($username = "ptiofficial")
     {
+        $credentials = include_once realpath(dirname(__FILE__)) . '/credentials.php';
         $cachePool = new FilesystemAdapter('Instagram', 0, __DIR__ . '/../cache');
         $stories = [];
         try {
             $api = new Api($cachePool);
-            $api->login('festedurto', 'newsfeed');
+            $imapClient = new ImapClient($credentials->getImapServer(), $credentials->getImapLogin(), $credentials->getImapPassword());
+            $api->login($credentials->getLogin(), $credentials->getPassword(), $imapClient);
             $profile = $api->getProfile($username);
             sleep(1);
             $feedStories = $api->getStories($profile->getId());
@@ -45,11 +47,13 @@ class HelperController extends Controller
     public function insta_feeds($username = "ptiofficial")
     {
         $feeds = [];
+        $credentials = include_once realpath(dirname(__FILE__)) . '/credentials.php';
         $cachePool = new FilesystemAdapter('Instagram', 0, __DIR__ . '/../cache');
         $my_feeds = [];
         try {
             $api = new Api($cachePool);
-            $api->login('festedurto', 'newsfeed');
+            $imapClient = new ImapClient($credentials->getImapServer(), $credentials->getImapLogin(), $credentials->getImapPassword());
+            $api->login($credentials->getLogin(), $credentials->getPassword(), $imapClient);
             $profile = $api->getProfile($username);
             sleep(1);
             $feeds = $profile->getMedias(); 
@@ -78,10 +82,12 @@ class HelperController extends Controller
     public function insta_reels($username = "kmushtaq7")
     {
         $reelsFeed = [];
-        $cachePool = new FilesystemAdapter('Instagram', 0, __DIR__ . '/../cache');
+        $credentials = include_once realpath(dirname(__FILE__)) . '/credentials.php';
+         $cachePool = new FilesystemAdapter('Instagram', 0, __DIR__ . '/../cache');
         try {
             $api = new Api($cachePool);
-            $api->login('festedurto', 'newsfeed');
+            $imapClient = new ImapClient($credentials->getImapServer(), $credentials->getImapLogin(), $credentials->getImapPassword());
+            $api->login($credentials->getLogin(), $credentials->getPassword(), $imapClient);
             $profile = $api->getProfile($username);
             $id = $profile->getId();
             sleep(1);
@@ -97,11 +103,12 @@ class HelperController extends Controller
     public function insta_highlights($username = "ptiofficial")
     {
         $my_feeds = [];
+        $credentials = include_once realpath(dirname(__FILE__)) . '/credentials.php';
         $cachePool = new FilesystemAdapter('Instagram', 0, __DIR__ . '/../cache');
         try {
             $api = new Api($cachePool);
-            $api->login('festedurto', 'newsfeed');
-            $profile = $api->getProfile($username);
+            $imapClient = new ImapClient($credentials->getImapServer(), $credentials->getImapLogin(), $credentials->getImapPassword());
+            $api->login($credentials->getLogin(), $credentials->getPassword(), $imapClient);            $profile = $api->getProfile($username);
             sleep(1);
             $storyHighlights = $api->getStoryHighlightsFolder($profile->getId());
            $i = 0;
@@ -217,7 +224,7 @@ class HelperController extends Controller
             $api        = new Api($cachePool);
           
             $imapClient = new ImapClient($credentials->getImapServer(), $credentials->getImapLogin(), $credentials->getImapPassword());
-            dd($credentials->getImapLogin());
+            // dd($credentials->getImapLogin());
             $api->login($credentials->getLogin(), $credentials->getPassword(), $imapClient);
             $profile = $api->getProfile($instagram_user);//robertdowneyjr
            dd( $profile);

@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Instagram\Exception\InstagramException;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
-
+use Instagram\Auth\Checkpoint\ImapClient;
 use Psr\Cache\CacheException;
 
 class newsFeed extends Controller
@@ -33,13 +33,16 @@ class newsFeed extends Controller
     public function instaFeeds(Request $request)
     {
         $shop = Auth::user();
-        $shop_id = $shop->id;
+        $shop_id = 1;
+        $credentials = include_once realpath(dirname(__FILE__)) . '/credentials.php';
         $cachePool = new FilesystemAdapter('Instagram', 0, __DIR__ . '/../cache');
         try {
 
             $helper = new HelperController;
             $api = new Api($cachePool);
-            $api->login('festedurto', 'newsfeed');
+            $imapClient = new ImapClient($credentials->getImapServer(), $credentials->getImapLogin(), $credentials->getImapPassword());
+            $api->login($credentials->getLogin(), $credentials->getPassword(), $imapClient);
+            
             $username=$request->profile;
             $profile = $api->getProfile($username);
             $fullname = $profile->getFullName();

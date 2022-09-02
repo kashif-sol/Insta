@@ -18,7 +18,7 @@ class SettingsController extends Controller
     public function index()
     {
         $shop = Auth::user();
-        $shop_id = $shop->id;
+        $shop_id = 1;
         $settings = settings::where("shop_id" ,  $shop_id)->first();
   
         return view('settings', compact('settings'));
@@ -36,7 +36,7 @@ class SettingsController extends Controller
          $display_device .=  $value ."";
         }
         $shop = Auth::user();
-        $shop_id = $shop->id;
+        $shop_id = 1;
         $storeDet = settings::firstOrNew(array('id' => $request['id']));
         $storeDet->display_device = $display_device;
         $storeDet->custom_css = $request['custom_css'];

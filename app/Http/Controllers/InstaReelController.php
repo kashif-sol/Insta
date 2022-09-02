@@ -13,8 +13,8 @@ class InstaReelController extends Controller
 {
     public function view_reel()
     {
-        $shop = Auth::user();
-        $shop_id = $shop->id;
+        // $shop = Auth::user();
+        $shop_id = 1;
 
         $user = Instagram::where('user_id',$shop_id)->first();
         $tab = InstaReel::where('user_id', $shop_id)->first();
@@ -41,8 +41,8 @@ class InstaReelController extends Controller
     }
     public function index(Request $request)
     {
-        $shop = Auth::user();
-        $shop_id = $shop->id;
+        // $shop = Auth::user();
+        $shop_id = 1;
 
         if(empty($request->id))
             $post = new InstaReel();
