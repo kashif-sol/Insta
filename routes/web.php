@@ -8,6 +8,8 @@ use App\Http\Controllers\InstaStoryController;
 use App\Http\Controllers\newsFeed;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\TestController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -65,7 +67,10 @@ Route::get('dashboard',[newsFeed::class,'dashboard'])->name("dashboard");
 Route::get('/faq' , function(){
     return view('faq');
 });
-
+// Route::get('/test' , function(){
+//     return view('test');
+// });
+Route::get('test',[TestController::class,'view_feeds']);
 Route::get('/installation-guide' , function(){
     return view('installation-guide');
 });

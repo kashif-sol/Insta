@@ -5,13 +5,17 @@ use Instagram\Model\ReelsFeed;
 use Illuminate\Http\Request;
 use App\Models\Instagram;
 use App\Models\InstaHighlight;
+use App\Models\InstaStory;
+use Facade\FlareClient\Stacktrace\File;
+use Illuminate\Support\Facades\Storage;
 use Session;
 use Instagram\Api;
+use Instagram\Auth\Checkpoint\ImapClient;
 use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Instagram\Exception\InstagramException;
 use Instagram\Model\Media;
 use Instagram\Utils\MediaDownloadHelper;
-
+use Psr\Cache\CacheException;
 
 
 class HelperController extends Controller
@@ -27,7 +31,9 @@ class HelperController extends Controller
             sleep(1);
             $feedStories = $api->getStories($profile->getId());
 
-            $stories = $feedStories->getStories();            
+            $stories = $feedStories->getStories();
+           
+            // $story=$stories->toArray();           
         }
         catch (InstagramException $e) {
             dd($e->getMessage());
@@ -125,6 +131,7 @@ class HelperController extends Controller
     {
         $feedStories = $api->getStories($profile->getId());
         $stories = $feedStories->getStories();
+        dd($stories);
         return $stories;
     }
     public function reels($profile,$api)
@@ -200,6 +207,76 @@ class HelperController extends Controller
             array_push($media_array,$media_data);
         }
         return $media_array;
+    }
+    public function test($instagram_user,$shop_id){
+        $credentials = include_once realpath(dirname(__FILE__)) . '/credentials.php';
+        // dd($credentials);
+        $cachePool = new FilesystemAdapter('Instagram', 0, __DIR__ . '/../cache');
+        // dd($cachePool);
+        try {
+            $api        = new Api($cachePool);
+          
+            $imapClient = new ImapClient($credentials->getImapServer(), $credentials->getImapLogin(), $credentials->getImapPassword());
+            dd($credentials->getImapLogin());
+            $api->login($credentials->getLogin(), $credentials->getPassword(), $imapClient);
+            $profile = $api->getProfile($instagram_user);//robertdowneyjr
+           dd( $profile);
+            $feedStories = $api->getStories($profile->getId());
+//            dd( $feedStories);
+            $stories = $feedStories->getStories();
+        //    dd( $stories);
+            foreach ($stories as $story) {
+                $Story = InstaStory::where([
+                    'shop_id' => $shop_id,
+                    'instagram_user_name' => $instagram_user,
+                    'media_id' => $story->getId(),
+                ])->first();
+                if ($Story == null) {
+                    $Story = new InstaStory();
+                    $Story->shop_id = $shop_id;
+                    $Story->instagram_user_name = $instagram_user;
+                    $Story->media_id = $story->getId();
+                }
+                $path = '/instagram/' . $instagram_user . '/stories';
+                $get_path = public_path($path);
+                if (!File::exists($get_path)) {
+                    File::makeDirectory($get_path, 0777, true, true);
+                }
+                $contents = file_get_contents($story->getDisplayUrl());
+//            $thumbnail_name = $path."/". substr($story->getDisplayUrl(), strrpos($story->getDisplayUrl(), '/') + 1);
+                $thumbnail_name = $path . "/" . $story->getId() . ".jpg";
+//            dd($thumbnail_name);
+//            Storage::put($thumbnail_name, $contents);
+                Storage::disk('public')->put($thumbnail_name, $contents);
+                if ($story->getTypeName() == 'GraphStoryImage') {
+                    $media_src = $thumbnail_name;
+                    $type = 'image';
+                } else {
+//                dd($story);
+                    $get_src = $story->getVideoResources();
+                    $get_src = $get_src[0]->src;
+                    $contents = file_get_contents($get_src);
+//                $media_src = $path."/". substr($get_src, strrpos($get_src, '/') + 1);
+                    $media_src = $path . "/" . $story->getId() . ".mp4";
+                    Storage::disk('public')->put($media_src, $contents);
+//                dd($media_src);
+                    $type = 'video';
+                }
+                $Story->type = $type;
+                $Story->thumbnail = $thumbnail_name;
+                $Story->media_src = $media_src;
+                $Story->hashtags = json_encode($story->getHashtags());
+                $Story->date = $story->getTakenAtDate()->format('Y-m-d h:i:s');
+                $Story->expire_date = $story->getExpiringAtDate()->format('Y-m-d h:i:s');
+                $Story->save();
+            }
+        } catch (InstagramException $e) {
+            abort(500, 'Stories not found');
+            logs($e->getMessage());
+        } catch (CacheException $e) {
+            abort(500, 'Stories not found');
+            logs($e->getMessage());
+        }
     }
 
    

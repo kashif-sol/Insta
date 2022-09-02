@@ -18,14 +18,15 @@ use Psr\Cache\CacheException;
 class InstaStoryController extends Controller
 {
     public function view_story(){
-        $user = Instagram::where('user_id',2)->first();
-        $data = InstaStory::where('user_id',2)->first(); 
+        $user = Instagram::where('user_id',1)->first();
+        $data = InstaStory::where('user_id',1)->first(); 
+     
         $helper = new HelperController;
         $feedStories = $helper->insta_stories($user->username);
         $stories = [];
         $pictures = [];
-       if(!empty($feedStories))
-            $stories = $feedStories->getStories();
+       if(!empty($stories))
+            $stories = $stories->getStories();
         foreach ($stories as $story) {
             $pic = $stories->getDisplayUrl();
             $url = $pic;

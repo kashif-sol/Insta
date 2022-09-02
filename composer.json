@@ -15,7 +15,8 @@
         "laravel/framework": "^8.0",
         "laravel/tinker": "^2.0",
         "osiset/laravel-shopify": "^17.1",
-        "pgrimaud/instagram-user-feed": "^6.16"
+        "pgrimaud/instagram-user-feed": "^6.16",
+        "webklex/laravel-imap": "2.2.0"
     },
     "require-dev": {
         "facade/ignition": "^2.3.6",

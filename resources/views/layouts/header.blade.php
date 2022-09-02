@@ -25,6 +25,9 @@
             <a href="/settings"
               ><i class="fa-solid fa-gear"></i> Settings</a
             >
+            <a href="/test"
+              ><i class="fa-solid fa-gear"></i> Test</a
+            >
           </div>
           <div class="col-md-12">
             <div class="row top-set">
